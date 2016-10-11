@@ -15,6 +15,7 @@
 	</head>
 	<body>
 		<nav class="navbar"> <!-- navigation bar -->
+			<!--ui-sref is like an href to a state-->
 			<a ui-sref="landing" class="logo">
 				<img src="/assets/images/bloc_jams_logo.png" alt="bloc jams logo">
 			</a>
@@ -22,6 +23,7 @@
 				<a ui-sref="collection" class="navbar-link">collection</a>
 			</div>
 		</nav>
+		<!--ui-view is where the state that is live will load-->
 		<ui-view></ui-view>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>

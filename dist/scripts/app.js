@@ -6,7 +6,9 @@
 				requireBase: false
 		});
 
-		$stateProvider
+		//creates the states for going from page to another
+		 
+		 $stateProvider
 			.state('landing', {
 				url: '/',
 				templateUrl: '/templates/landing.html'
