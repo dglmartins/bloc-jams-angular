@@ -7,10 +7,12 @@
 		});
 
 		//creates the states for going from page to another
+		// assigns the controllers to the states as well
 		 
 		 $stateProvider
 			.state('landing', {
 				url: '/',
+			 	controller: 'LandingCtrl as landing',
 				templateUrl: '/templates/landing.html'
 		})
 			.state('album', {
@@ -19,6 +21,7 @@
 		})
 			.state('collection', {
 				url: '/collection',
+			 	controller: 'CollectionCtrl as collection',
 				templateUrl: '/templates/collection.html'
 		});
 		
