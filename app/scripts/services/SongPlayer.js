@@ -23,8 +23,7 @@
 		
 		var setSong = function(song) {
 			if (currentBuzzObject) {
-				currentBuzzObject.stop();
-				SongPlayer.currentSong.playing = null;
+				stopSong();
 			}
 
 			currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -71,15 +70,19 @@
 		};
 		
 		
+		var stopSong = function() {
+			currentBuzzObject.stop();
+			SongPlayer.currentSong.playing = null;
+			
+		}
 		
 
 /**
  * @desc Active song object begins with first song so Player bar play will work. First song is then set to start 
  * @type {Object}
  */
-		var firstSong = currentAlbum.songs[0];
 		
-		SongPlayer.currentSong = firstSong;
+		var firstSong = currentAlbum.songs[0];
 		
 		setSong(firstSong);
 		
@@ -123,15 +126,34 @@
 		
 /**
 * SongPlayer.previous property - @function
-* @desc gets current index of song and decreases by one. 
+* @desc gets current index of song and decreases by one and sets and plays the new song.  stops song if first one.
 * @param {Object} song
 */		
 		SongPlayer.previous = function() {
 			var currentSongIndex = getSongIndex(SongPlayer.currentSong);
 			currentSongIndex--;
 			if (currentSongIndex < 0) {
-         		currentBuzzObject.stop();
-				SongPlayer.currentSong.playing = null;
+         		stopSong();
+     		} else {
+				var song = currentAlbum.songs[currentSongIndex];
+				setSong(song);
+				playSong(song);
+     		}
+			
+		};
+		
+		/**
+* SongPlayer.next property - @function
+* @desc gets current index of song and increase by one and sets and plays the new song. Goes to first song if at last song.
+* @param {Object} song
+*/		
+		SongPlayer.next = function() {
+			var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+			currentSongIndex++;
+			if (currentSongIndex > currentAlbum.songs.length - 1) {
+         		var song = currentAlbum.songs[0];
+				setSong(song);
+				playSong(song);
      		} else {
 				var song = currentAlbum.songs[currentSongIndex];
 				setSong(song);
