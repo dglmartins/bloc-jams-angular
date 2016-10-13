@@ -207,13 +207,12 @@
  		};
 		
 		
-	/*	SongPlayer.currentBuzzObject.bind('timeupdate', function() {
-				$rootScope.$apply(function() {
-					SongPlayer.currentTime = SongPlayer.currentBuzzObject.getTime();
-				});
-				
-				
-			});*/
+/**
+ * @function timeUpdate
+ * @desc updates the time of a song using $scope.$apply. The scope and the buzzObject will be passed in the controller. 
+ * @param $scope = controller scope
+ *@param buzzObject = currentBuzz object passed in the controller
+ */	
 		
 		SongPlayer.timeUpdate = function($scope, buzzObject) {
 			buzzObject.bind('timeupdate', function() {
