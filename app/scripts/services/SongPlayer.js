@@ -1,5 +1,5 @@
 (function() {
-	function SongPlayer($rootScope, Fixtures) {
+	function SongPlayer(Fixtures) {
 		var SongPlayer = {};
 /**
 * @desc gets current Album from Fixtures.
@@ -13,44 +13,36 @@
 * @desc Buzz object audio file
 * @type {Object}
 */
-		var currentBuzzObject = null;
+		SongPlayer.currentBuzzObject = null;
 		
 /**
 * @function setSong
-* @desc Stops currently playing song and loads new audio file as currentBuzzObject
+* @desc Stops currently playing song and loads new audio file as SongPlayer.currentBuzzObject
 * @param {Object} song
 */
 		
 		var setSong = function(song) {
-			if (currentBuzzObject) {
+			if (SongPlayer.currentBuzzObject) {
 				stopSong();
 			}
 
-			currentBuzzObject = new buzz.sound(song.audioUrl, {
+			SongPlayer.currentBuzzObject = new buzz.sound(song.audioUrl, {
 				formats: ['mp3'],
 				preload: true
 			});
 
-			currentBuzzObject.bind('timeupdate', function() {
-				$rootScope.$apply(function() {
-					SongPlayer.currentTime = currentBuzzObject.getTime();
-				});
-				
-				
-			});
-			
-			
+	
 			SongPlayer.currentSong = song;
 		};
 
 /**
 * @function playSong
-* @desc plays the currentBuzzObject and sets the playing property of the song to true  
+* @desc plays the SongPlayer.currentBuzzObject and sets the playing property of the song to true  
 * @param {Object} song
 */
 		
 		var playSong = function(song) {
-			currentBuzzObject.play();
+			SongPlayer.currentBuzzObject.play();
 			song.playing = true;
 			
 		};
@@ -58,11 +50,11 @@
 		
 /**
 * @function pauseSong
-* @desc pauses the currentBuzzObject and sets the playing property of the song to false  
+* @desc pauses the SongPlayer.currentBuzzObject and sets the playing property of the song to false  
 * @param {Object} song
 */
 		var pauseSong = function(song) {
-			currentBuzzObject.pause();
+			SongPlayer.currentBuzzObject.pause();
 			song.playing = false;
 			
 		};
@@ -80,7 +72,7 @@
 		
 		
 		var stopSong = function() {
-			currentBuzzObject.stop();
+			SongPlayer.currentBuzzObject.stop();
 			SongPlayer.currentSong.playing = null;
 			
 		}
@@ -129,7 +121,7 @@
 				playSong(song);
 			
 			} else if (SongPlayer.currentSong === song) {
-				if (currentBuzzObject.isPaused()) {
+				if (SongPlayer.currentBuzzObject.isPaused()) {
 					playSong(song);
 					
 				}
@@ -197,8 +189,8 @@
  */
 		
 		SongPlayer.setCurrentTime = function(time) {
-     		if (currentBuzzObject) {
-         		currentBuzzObject.setTime(time);
+     		if (SongPlayer.currentBuzzObject) {
+         		SongPlayer.currentBuzzObject.setTime(time);
      		}
  		};
 
@@ -209,12 +201,27 @@
  */
 		
 		SongPlayer.setVolume = function(volume) {
-     		if (currentBuzzObject) {
-         		currentBuzzObject.setVolume(volume);
+     		if (SongPlayer.currentBuzzObject) {
+         		SongPlayer.currentBuzzObject.setVolume(volume);
      		}
  		};
 		
 		
+	/*	SongPlayer.currentBuzzObject.bind('timeupdate', function() {
+				$rootScope.$apply(function() {
+					SongPlayer.currentTime = SongPlayer.currentBuzzObject.getTime();
+				});
+				
+				
+			});*/
+		
+		SongPlayer.timeUpdate = function($scope, buzzObject) {
+			buzzObject.bind('timeupdate', function() {
+				$scope.$apply(function() {
+					SongPlayer.currentTime = buzzObject.getTime();
+					});	
+				});
+		};
 		
 		
 		return SongPlayer;
@@ -223,7 +230,7 @@
 	
 	angular
 		.module('blocJams')
-		.factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
+		.factory('SongPlayer', ['Fixtures', SongPlayer]);
 	
 	
 })();
