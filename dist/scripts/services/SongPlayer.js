@@ -218,8 +218,14 @@
 			currentBuzzObject.bind('timeupdate', function() {
 				$scope.$apply(function() {
 					SongPlayer.currentTime = currentBuzzObject.getTime();
-					});	
-				});
+					if (SongPlayer.currentTime >= SongPlayer.currentSong.duration) {
+						currentBuzzObject.stop();
+						SongPlayer.currentTime = 0;
+						$scope.nextClick();
+					}
+
+				});	
+			});
 		};
 		
 		
