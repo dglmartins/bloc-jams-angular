@@ -11,9 +11,8 @@
 		
 		
 		this.update = function() {
-			var currentBuzz = SongPlayer.currentBuzzObject;
-			SongPlayer.timeUpdate($scope, currentBuzz);
-		}
+			SongPlayer.timeUpdate($scope);
+		};
 /**
  * call the function to start, as the first song is already loaded into currentBuzzObject.   
  */	

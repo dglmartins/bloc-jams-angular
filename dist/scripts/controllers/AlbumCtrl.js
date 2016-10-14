@@ -7,9 +7,8 @@
  * @desc updates the currentBuzzObject from PlayerBar and calls SongPlayer.timeUpdate using the controller's $scope so that $scope.$apply works.   
  */			
 		this.update = function() {
-			var currentBuzz = SongPlayer.currentBuzzObject;
-			SongPlayer.timeUpdate($scope, currentBuzz);
-		}
+			SongPlayer.timeUpdate($scope);
+		};
 	}
 	
 	angular
