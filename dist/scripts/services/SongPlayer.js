@@ -101,6 +101,7 @@
 
 		
 		SongPlayer.volume = 80;
+		SongPlayer.isMute = false;
 		
 		
 		
@@ -196,7 +197,7 @@
 
 /**
  * @function setVolume
- * @desc Set volume of currently playing song
+ * @desc Set volume of currently playing song. If volume zero, Songplayer.mute is true, else is false.
  * @param {Number} volume
  */
 		
@@ -204,7 +205,51 @@
      		if (currentBuzzObject) {
          		currentBuzzObject.setVolume(volume);
      		}
+			
+			SongPlayer.volume = volume;
+			
+			if(volume === 0) {
+				SongPlayer.isMute = true;
+				
+			} else {
+				SongPlayer.isMute = false;
+			}
+			
  		};
+
+/**
+ * @function toggleMute
+ * @desc if there is a volume sets volume of currently playing song to zero and isMute to true, if mute sets to 80;
+ * @param {Number} volume
+ */
+		
+		
+		SongPlayer.toggleMute = function() {
+			
+			if (SongPlayer.volume === 0) {
+				if (currentBuzzObject) {
+         		currentBuzzObject.setVolume(SongPlayer.lastVolume);
+     			}
+			
+				SongPlayer.volume = SongPlayer.lastVolume;
+			
+				SongPlayer.isMute = false;
+				
+			} else {
+				SongPlayer.lastVolume = SongPlayer.volume;
+				if (currentBuzzObject) {
+         		currentBuzzObject.setVolume(0);
+     			}
+			
+				SongPlayer.volume = 0;
+			
+				SongPlayer.isMute = true;
+					
+				
+			}
+			
+			
+		};
 		
 		
 /**
